@@ -1,0 +1,16 @@
+# Go バイナリ
+server
+*.exe
+*.out
+
+# Go モジュールのキャッシュ
+/go/pkg/
+*.mod.cache
+
+# 環境変数
+.env
+
+# IDE / OS
+.DS_Store
+.vscode/
+.idea/
