@@ -7,10 +7,10 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # ソースコードをコピー
-COPY . /app/src
+COPY . ./
 
 # ビルド
-RUN go build -o server /app/src/main.go
+RUN go build -o server .
 
 # APIサーバ起動
 CMD ["./server"]
