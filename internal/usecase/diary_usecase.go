@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"sabj/app/domain"
+	"sabj/internal/domain"
 	"time"
 )
 

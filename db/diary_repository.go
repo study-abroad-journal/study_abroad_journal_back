@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"sabj/app/domain"
+	"sabj/internal/domain"
 	"time"
 
 	_ "github.com/lib/pq"

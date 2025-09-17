@@ -2,8 +2,8 @@ package controller
 
 import (
 	"net/http"
-	"sabj/app/domain"
-	"sabj/app/usecase"
+	"sabj/internal/domain"
+	"sabj/internal/usecase"
 
 	"github.com/labstack/echo/v4"
 )
