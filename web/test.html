@@ -28,26 +28,32 @@
           const title = document.getElementById("title").value;
           const text = document.getElementById("text").value;
 
-          const res = await fetch("http://localhost:8080/api/diary", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              title: title,
-              text: text,
-              latitude: 35.6895,
-              longitude: 139.6917,
-              category_id: 1,
-            }),
-          });
+          try {
+            const res = await fetch("http://localhost:8080/api/diary", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                user_id: 1, // ← 追加
+                title: title,
+                text: text,
+                latitude: 35.6895,
+                longitude: 139.6917,
+                category_id: 1,
+              }),
+            });
 
-          const json = await res.json();
-          document.getElementById("response").textContent = JSON.stringify(
-            json,
-            null,
-            2
-          );
+            const json = await res.json();
+            document.getElementById("response").textContent = JSON.stringify(
+              json,
+              null,
+              2
+            );
+          } catch (error) {
+            document.getElementById("response").textContent =
+              "エラー: " + error.message;
+          }
         });
     </script>
   </body>
