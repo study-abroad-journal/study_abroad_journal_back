@@ -7,8 +7,6 @@ import (
 	"sabj/internal/controller"
 	"sabj/internal/usecase"
 
-	//"sabj/internal/domain"
-
 	"github.com/labstack/echo/v4"
 )
 
@@ -37,6 +35,12 @@ func main() {
 
 	e.POST("/api/diary", diaryCtrl.CreateDiary)
 	fmt.Println("API ルート設定完了")
+
+	
+	e.GET("/api/diary/:id", diaryCtrl.GetDiary)        // 特定の日記取得
+	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)     // 全日記取得
+	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)     // 日記更新
+	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary)  // 日記削除
 
 
 // 	newDiary := &domain.Diary{

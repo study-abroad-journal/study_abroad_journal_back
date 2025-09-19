@@ -3,7 +3,7 @@ package domain
 import "time"
 
 type Diary struct {
-    DiaryID            int64     `json:"id"`
+    DiaryID            int64     `json:"diary_id"`
     UserID        int64     `json:"user_id"`
     Title         string    `json:"title"`
     CategoryID    int64     `json:"category_id"`
@@ -15,12 +15,11 @@ type Diary struct {
 }
 
 type DiaryRepository interface {
-    Save(diary *Diary) error
-    // FindByID(id int64) (*Diary, error)
-    // FindAll(userID int64) ([]*Diary, error)
-	Create(d *Diary) (*Diary, error)
-    // Update(diary *Diary) error
-    // Delete(id int64) error
+    Create(d *Diary) (*Diary, error)
+    GetByID(id int64) (*Diary, error)   //特定の日記の取得
+    GetAll(userID int64) ([]*Diary, error)  //ユーザーの日記一覧取得
+    Update(diary *Diary) error
+    Delete(id int64) error
 }
 
 
