@@ -8,11 +8,21 @@ import (
 	"sabj/internal/usecase"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
     e := echo.New()
 	// 	fmt.Println("Echo インスタンス作成完了")
+
+	// CORS設定を追加
+    e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		//AllowOrigins: []string{"*"}, 
+        AllowOrigins: []string{"http://localhost:3000"},  // Next.jsのURL
+        AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowHeaders: []string{"Content-Type", "Authorization"},
+    }))
+
 
 	e.Static("/", "web")
 	e.GET("/health", func(c echo.Context) error {
