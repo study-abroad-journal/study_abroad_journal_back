@@ -8,10 +8,24 @@ import (
 	"sabj/internal/usecase"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-    e := echo.New()
+	e := echo.New()
+
+	// --- CORSミドルウェアの設定を追加 ---
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"}, // フロントエンドのURLを許可
+		AllowHeaders: []string{
+			echo.HeaderOrigin,
+			echo.HeaderContentType,
+			echo.HeaderAccept,
+			echo.HeaderAuthorization, // Authorization ヘッダーを許可
+		},
+		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
+	}))
+	// ------------------------------------
 	// 	fmt.Println("Echo インスタンス作成完了")
 
 	e.Static("/", "web")
@@ -36,25 +50,23 @@ func main() {
 	e.POST("/api/diary", diaryCtrl.CreateDiary)
 	fmt.Println("API ルート設定完了")
 
-	
-	e.GET("/api/diary/:id", diaryCtrl.GetDiary)        // 特定の日記取得
-	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)     // 全日記取得
-	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)     // 日記更新
-	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary)  // 日記削除
+	e.GET("/api/diary/:id", diaryCtrl.GetDiary)       // 特定の日記取得
+	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)    // 全日記取得
+	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)    // 日記更新
+	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary) // 日記削除
 
+	// 	newDiary := &domain.Diary{
+	// 		UserID: 1,
+	// 		Title:  "初めての日記",
+	// 		Text:   "今日は Go アプリを動かせた！",
+	// 	}
 
-// 	newDiary := &domain.Diary{
-// 		UserID: 1,
-// 		Title:  "初めての日記",
-// 		Text:   "今日は Go アプリを動かせた！",
-// 	}
+	// 	created, err := diaryRepo.Create(newDiary)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
 
-// 	created, err := diaryRepo.Create(newDiary)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Printf("Created diary: %+v\n", created)
+	// 	fmt.Printf("Created diary: %+v\n", created)
 
 	//fmt.Println("登録されたルート一覧:")
 	for _, r := range e.Routes() {
