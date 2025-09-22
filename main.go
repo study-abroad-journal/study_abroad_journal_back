@@ -54,7 +54,6 @@ func main() {
 	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)    // 全日記取得
 	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)    // 日記更新
 	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary) // 日記削除
-	e.POST("/api/users")
 
 	// 	newDiary := &domain.Diary{
 	// 		UserID: 1,
