@@ -4,7 +4,6 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id BIGSERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -29,7 +28,7 @@ CREATE TABLE IF NOT EXISTS categories (
 -- =================================================================
 CREATE TABLE IF NOT EXISTS diaries (
     diary_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id BIGSERIAL NOT NULL,
     title VARCHAR(255) NOT NULL,
     category_id BIGINT,
     latitude DECIMAL(9, 6),
@@ -66,7 +65,7 @@ CREATE TABLE IF NOT EXISTS photos (
 -- =================================================================
 CREATE TABLE IF NOT EXISTS travelogues (
     travelogues_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id BIGSERIAL NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
