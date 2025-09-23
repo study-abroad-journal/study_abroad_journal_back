@@ -6,6 +6,7 @@ import (
 	"sabj/db"
 	"sabj/internal/controller"
 	"sabj/internal/usecase"
+	"sabj/internal/handlers"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -52,12 +53,9 @@ func main() {
 	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)     // 日記更新
 	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary)  // 日記削除
 
-
-// 	newDiary := &domain.Diary{
-// 		UserID: 1,
-// 		Title:  "初めての日記",
-// 		Text:   "今日は Go アプリを動かせた！",
-// 	}
+	// AI添削機能のルート設定
+	aiHandler := &handlers.AIHandler{}
+	e.POST("/api/ai/correct", aiHandler.Correct)
 
 // 	created, err := diaryRepo.Create(newDiary)
 // 	if err != nil {
