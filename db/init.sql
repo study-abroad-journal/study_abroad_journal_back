@@ -76,3 +76,21 @@ CREATE TABLE IF NOT EXISTS travelogues (
         REFERENCES users(user_id)
         ON DELETE CASCADE
 );
+
+-- =================================================================
+--  サンプルデータの挿入
+-- =================================================================
+
+-- サンプルユーザーの挿入
+INSERT INTO users (email, password) VALUES
+('test@example.com', 'password123')
+ON CONFLICT (email) DO NOTHING;
+
+-- サンプルカテゴリの挿入
+INSERT INTO categories (user_id, name, color) VALUES
+(1, '観光', '#FF6B6B'),
+(1, '食事', '#4ECDC4'),
+(1, '移動', '#45B7D1'),
+(1, '宿泊', '#96CEB4'),
+(1, 'その他', '#FFEAA7')
+ON CONFLICT (user_id, name) DO NOTHING;

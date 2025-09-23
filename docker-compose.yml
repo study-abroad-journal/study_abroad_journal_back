@@ -6,7 +6,8 @@ services:
     volumes:
       - ../study_abroad_journal_front:/app
     environment:
-      - NEXT_PUBLIC_API_URL=http://backend:8080
+      # - NEXT_PUBLIC_API_URL=http://backend:8080
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
     depends_on:
       - backend
 
