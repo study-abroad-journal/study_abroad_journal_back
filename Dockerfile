@@ -32,4 +32,5 @@ RUN go mod download
 # ビルド
 RUN go build -o server .
 
+RUN apt-get update && apt-get install -y curl
 CMD ["./server"]
