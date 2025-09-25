@@ -12,17 +12,16 @@ import (
 )
 
 func main() {
-    e := echo.New()
+	e := echo.New()
 	// 	fmt.Println("Echo インスタンス作成完了")
 
 	// CORS設定を追加
-    e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		//AllowOrigins: []string{"*"}, 
-        AllowOrigins: []string{"http://localhost:3000"},  // Next.jsのURL
-        AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowHeaders: []string{"Content-Type", "Authorization"},
-    }))
-
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		//AllowOrigins: []string{"*"},
+		AllowOrigins: []string{"http://localhost:3000"}, // Next.jsのURL
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders: []string{"Content-Type", "Authorization"},
+	}))
 
 	e.Static("/", "web")
 	e.GET("/health", func(c echo.Context) error {
@@ -46,25 +45,36 @@ func main() {
 	e.POST("/api/diary", diaryCtrl.CreateDiary)
 	fmt.Println("API ルート設定完了")
 
-	
-	e.GET("/api/diary/:id", diaryCtrl.GetDiary)        // 特定の日記取得
-	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)     // 全日記取得
-	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)     // 日記更新
-	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary)  // 日記削除
+	e.GET("/api/diary/:id", diaryCtrl.GetDiary)       // 特定の日記取得
+	e.GET("/api/diaries", diaryCtrl.GetAllDiaries)    // 全日記取得
+	e.PUT("/api/diary/:id", diaryCtrl.UpdateDiary)    // 日記更新
+	e.DELETE("/api/diary/:id", diaryCtrl.DeleteDiary) // 日記削除
 
+	userRepo, err := db.NewUserRepository()
+	if err != nil {
+		//fmt.Printf("DB接続エラー: %v\n", err)
+		log.Fatal(err)
+	}
+	//fmt.Println("DB接続成功")
 
-// 	newDiary := &domain.Diary{
-// 		UserID: 1,
-// 		Title:  "初めての日記",
-// 		Text:   "今日は Go アプリを動かせた！",
-// 	}
+	userUC := &usecase.UserUsecase{Repo: userRepo}
+	//fmt.Println("UseCase作成完了")
 
-// 	created, err := diaryRepo.Create(newDiary)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+	userCtrl := &controller.UserController{UC: userUC}
+	e.POST("/api/users", userCtrl.CreateUser)
 
-// 	fmt.Printf("Created diary: %+v\n", created)
+	// 	newDiary := &domain.Diary{
+	// 		UserID: 1,
+	// 		Title:  "初めての日記",
+	// 		Text:   "今日は Go アプリを動かせた！",
+	// 	}
+
+	// 	created, err := diaryRepo.Create(newDiary)
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
+
+	// 	fmt.Printf("Created diary: %+v\n", created)
 
 	//fmt.Println("登録されたルート一覧:")
 	for _, r := range e.Routes() {
