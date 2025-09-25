@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- =================================================================
 CREATE TABLE IF NOT EXISTS categories (
     categories_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     name TEXT NOT NULL,
     color TEXT NOT NULL CHECK (color ~ '^#[0-9a-fA-F]{6}$'),
     CONSTRAINT fk_user
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS categories (
 -- =================================================================
 CREATE TABLE IF NOT EXISTS diaries (
     diary_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     category_id BIGINT,
     latitude DECIMAL(9, 6),
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS photos (
 -- =================================================================
 CREATE TABLE IF NOT EXISTS travelogues (
     travelogues_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     title VARCHAR(255) NOT NULL,
     content TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
