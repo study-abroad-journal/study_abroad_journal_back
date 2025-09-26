@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS travelogues (
 -- =================================================================
 
 -- サンプルユーザーの挿入
-INSERT INTO users (email, password) VALUES
-('test@example.com', 'password123')
+INSERT INTO users (email, password, user_id) VALUES
+('test@example.com', 'password123', '1')
 ON CONFLICT (email) DO NOTHING;
 
 -- サンプルカテゴリの挿入
